@@ -40,7 +40,6 @@ class Errors {
   }
   get(field) {
     if (this.errors[field]) {
-      //console.log(this.errors[field]);
       return this.errors[field];
     }
   }
@@ -48,6 +47,9 @@ class Errors {
   record(errors) {
     this.errors = errors.errors;
     console.log(this.errors);
+  }
+  reset() {
+    this.errors = {};
   }
 }
 
@@ -68,14 +70,15 @@ export default {
   methods: {
     saveForm() {
       event.preventDefault();
-      var app = this;
-      var newTransfer = app.transfer;
+      //var app = this;
+      var newTransfer = this.transfer;
       axios
         .post("/api/transfer", newTransfer)
-        .then(function(resp) {
+        .then(resp => {
           //console.log(resp);
-          app.$root.$emit('onSubmitForm', resp);
-          //app.$router.push({path: '/'});
+          this.$root.$emit("onSubmitForm", resp);
+          console.log(resp);
+          this.errors.reset();
         })
         .catch(error => {
           this.errors.record(error.response.data);

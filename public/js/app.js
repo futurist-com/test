@@ -47477,6 +47477,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   mounted: function mounted() {
     var app = this;
+    this.$root.$on("onUpdateBalance", function (resp) {
+      axios.get("/api/bill").then(function (resp) {
+        app.bill = resp.data;
+      }).catch(function (resp) {});
+    });
     axios.get("/api/bill").then(function (resp) {
       app.bill = resp.data;
       console.log(app);
@@ -47615,7 +47620,6 @@ var Errors = function () {
     key: "get",
     value: function get(field) {
       if (this.errors[field]) {
-        //console.log(this.errors[field]);
         return this.errors[field];
       }
     }
@@ -47624,6 +47628,11 @@ var Errors = function () {
     value: function record(errors) {
       this.errors = errors.errors;
       console.log(this.errors);
+    }
+  }, {
+    key: "reset",
+    value: function reset() {
+      this.errors = {};
     }
   }]);
 
@@ -47650,12 +47659,13 @@ var Errors = function () {
       var _this = this;
 
       event.preventDefault();
-      var app = this;
-      var newTransfer = app.transfer;
+      //var app = this;
+      var newTransfer = this.transfer;
       axios.post("/api/transfer", newTransfer).then(function (resp) {
         //console.log(resp);
-        app.$root.$emit('onSubmitForm', resp);
-        //app.$router.push({path: '/'});
+        _this.$root.$emit("onSubmitForm", resp);
+        console.log(resp);
+        _this.errors.reset();
       }).catch(function (error) {
         _this.errors.record(error.response.data);
       });
@@ -47888,17 +47898,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     };
   },
   mounted: function mounted() {
-    this.$root.$on('onSubmitForm', function (resp) {
-      var app = this;
-      axios.get("/api/gettransfer").then(function (resp) {
+    var app = this;
+    this.$root.$on("onSubmitForm", function (resp) {
+      axios.get("/api/transfer").then(function (resp) {
         app.transfers = resp.data;
-        //console.log(app);
       }).catch(function (resp) {});
     });
-    var app = this;
-    axios.get("/api/gettransfer").then(function (resp) {
+    //var app = this;
+    axios.get("/api/transfer").then(function (resp) {
       app.transfers = resp.data;
-      //console.log(app);
     }).catch(function (resp) {});
   },
 
@@ -47906,7 +47914,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     deleteEntry: function deleteEntry(id, index) {
       if (confirm("Вы действительно хотите удалить перевод?")) {
         var app = this;
-        axios.delete("/api/gettransferdel/" + id).then(function (resp) {
+        axios.delete("/api/transfer/" + id).then(function (resp) {
           app.transfers = resp.data;
         }).catch(function (resp) {
           alert("Не удалось удалить перевод");
@@ -47914,12 +47922,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
     },
     updateEntry: function updateEntry(id, index) {
+      var _this = this;
+
       if (confirm("Вы действительно хотите подтвердить перевод?")) {
         var app = this;
-        axios.put("/api/gettransferput/" + id).then(function (resp) {
-          app.transfers = resp.data;
-          //app.transfers.splice(index, 1);
+        axios.put("/api/transfer/" + id).then(function (resp) {
+          _this.transfers = resp.data;
+          _this.$root.$emit("onUpdateBalance", resp);
         }).catch(function (resp) {
+
           alert("Не удалось подтвердить перевод. Скорее всего у вас не достаточно средств");
         });
       }

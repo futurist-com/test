@@ -21,8 +21,8 @@ class transfer extends Model
         $tarnsfer = DB::select("select transfers.id, transfers.summ, transfers.date_plan_executed, transfers.`status`, users.name  from transfers 
         join bills on transfers.id_bill_recipient=bills.id
         join users on bills.user_id=users.id
-        where transfers.id_bill_sender=:idBill
-        order by transfers.id desc", ['idBill'=>$bill->id]);
+        where transfers.id_bill_sender=:idBill  and transfers.status=0
+        order by transfers.id  desc", ['idBill'=>$bill->id]);
         return json_encode($tarnsfer);
     }
 }

@@ -13,6 +13,14 @@ export default {
   },
   mounted() {
     var app = this;
+    this.$root.$on("onUpdateBalance", function(resp) {
+      axios
+        .get("/api/bill")
+        .then(resp => {
+          app.bill = resp.data;
+        })
+        .catch(function(resp) {});
+    });
     axios
       .get("/api/bill")
       .then(function(resp) {

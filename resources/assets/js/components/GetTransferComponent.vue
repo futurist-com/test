@@ -51,22 +51,20 @@ export default {
     };
   },
   mounted() {
-    this.$root.$on('onSubmitForm', function (resp) {
-      var app = this;
-      axios
-      .get("/api/gettransfer")
-      .then(function(resp) {
-        app.transfers = resp.data;
-        //console.log(app);
-      })
-      .catch(function(resp) {});
-      });
     var app = this;
+    this.$root.$on("onSubmitForm", function(resp) {
+      axios
+        .get("/api/transfer")
+        .then(resp => {
+          app.transfers = resp.data;
+        })
+        .catch(function(resp) {});
+    });
+    //var app = this;
     axios
-      .get("/api/gettransfer")
+      .get("/api/transfer")
       .then(function(resp) {
         app.transfers = resp.data;
-        //console.log(app);
       })
       .catch(function(resp) {});
   },
@@ -75,7 +73,7 @@ export default {
       if (confirm("Вы действительно хотите удалить перевод?")) {
         var app = this;
         axios
-          .delete("/api/gettransferdel/" + id)
+          .delete("/api/transfer/" + id)
           .then(function(resp) {
             app.transfers = resp.data;
           })
@@ -88,13 +86,16 @@ export default {
       if (confirm("Вы действительно хотите подтвердить перевод?")) {
         var app = this;
         axios
-          .put("/api/gettransferput/" + id)
-          .then(function(resp) {
-            app.transfers = resp.data;
-            //app.transfers.splice(index, 1);
+          .put("/api/transfer/" + id)
+          .then((resp)=> {
+            this.transfers = resp.data;
+             this.$root.$emit("onUpdateBalance", resp);
           })
           .catch(function(resp) {
-            alert("Не удалось подтвердить перевод. Скорее всего у вас не достаточно средств");
+            
+            alert(
+              "Не удалось подтвердить перевод. Скорее всего у вас не достаточно средств"
+            );
           });
       }
       /*var app = this;
