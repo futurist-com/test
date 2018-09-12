@@ -47620,6 +47620,7 @@ var Errors = function () {
     key: "get",
     value: function get(field) {
       if (this.errors[field]) {
+        //console.log(this.errors[field]);
         return this.errors[field];
       }
     }
@@ -47659,13 +47660,14 @@ var Errors = function () {
       var _this = this;
 
       event.preventDefault();
-      //var app = this;
-      var newTransfer = this.transfer;
+      var app = this;
+      var newTransfer = app.transfer;
       axios.post("/api/transfer", newTransfer).then(function (resp) {
         //console.log(resp);
-        _this.$root.$emit("onSubmitForm", resp);
-        console.log(resp);
         _this.errors.reset();
+        _this.$root.$emit('onSubmitForm', resp);
+
+        //app.$router.push({path: '/'});
       }).catch(function (error) {
         _this.errors.record(error.response.data);
       });
@@ -47682,6 +47684,10 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "panel panel-default" }, [
+    _c("div", { staticClass: "panel-heading" }, [
+      _vm._v("Форма для перевода денежных средств")
+    ]),
+    _vm._v(" "),
     _c("div", { staticClass: "panel-body" }, [
       _c(
         "form",
@@ -47727,8 +47733,10 @@ var render = function() {
                   return _c("li", [_vm._v(_vm._s(error))])
                 })
               )
-            ]),
-            _vm._v(" "),
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-xs-12 form-group" }, [
               _c("label", { staticClass: "control-label" }, [_vm._v("Сумма")]),
               _vm._v(" "),
@@ -47760,10 +47768,10 @@ var render = function() {
                   return _c("li", [_vm._v(_vm._s(error))])
                 })
               )
-            ]),
-            _vm._v(" "),
-            _vm._m(0)
-          ])
+            ])
+          ]),
+          _vm._v(" "),
+          _vm._m(0)
         ]
       )
     ]),
@@ -47776,10 +47784,12 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-xs-12 form-group" }, [
-      _c("label", { staticClass: "control-label" }),
-      _vm._v(" "),
-      _c("button", { staticClass: "btn btn-success" }, [_vm._v("Перевести")])
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-xs-12 form-group" }, [
+        _c("label", { staticClass: "control-label" }),
+        _vm._v(" "),
+        _c("button", { staticClass: "btn btn-success" }, [_vm._v("Перевести")])
+      ])
     ])
   }
 ]
@@ -47888,8 +47898,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -47954,10 +47962,10 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
+  return _c("div", [
     _c("div", { staticClass: "panel panel-default" }, [
       _c("div", { staticClass: "panel-heading" }, [
-        _vm._v("Список ваших переводов")
+        _vm._v("Список ваших неподтвержденных  переводов")
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "panel-body" }, [
@@ -47993,7 +48001,7 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v("\n      Удалить\n     ")]
+                        [_vm._v("\n      Удалить\n      ")]
                       )
                     ])
                   : _vm._e(),
@@ -48011,7 +48019,7 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v("\n      Подтвердить\n     ")]
+                        [_vm._v("\n      Подтвердить\n      ")]
                       )
                     ])
                   : _vm._e()

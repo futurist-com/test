@@ -1,5 +1,6 @@
 <template>
      <div class="panel panel-default">
+         <div class="panel-heading">Форма для перевода денежных средств</div>
         <div class="panel-body">
              <form v-on:submit="saveForm()">
              <div class="row">
@@ -9,11 +10,9 @@
                   <ul>
                   <li v-for="error in errors.get('user_id')">{{ error }}</li>
                   </ul>
-                
-                 
-                
                 </div>
-                
+             </div>
+             <div class="row">
                  <div class="col-xs-12 form-group">
                     <label class="control-label">Сумма</label>
                     <input type="text" v-model="transfer.summ"  class="form-control" >
@@ -21,7 +20,8 @@
                   <li v-for="error in errors.get('summ')">{{ error }}</li>
                   </ul>
                  </div>
-                           
+             </div>
+             <div class="row">             
                  <div class="col-xs-12 form-group">
                     <label class="control-label"> </label>
                     <button class="btn btn-success">Перевести</button>
@@ -40,6 +40,7 @@ class Errors {
   }
   get(field) {
     if (this.errors[field]) {
+      //console.log(this.errors[field]);
       return this.errors[field];
     }
   }
@@ -48,7 +49,7 @@ class Errors {
     this.errors = errors.errors;
     console.log(this.errors);
   }
-  reset() {
+  reset(){
     this.errors = {};
   }
 }
@@ -70,15 +71,16 @@ export default {
   methods: {
     saveForm() {
       event.preventDefault();
-      //var app = this;
-      var newTransfer = this.transfer;
+      var app = this;
+      var newTransfer = app.transfer;
       axios
         .post("/api/transfer", newTransfer)
-        .then(resp => {
+        .then((resp)=> {
           //console.log(resp);
-          this.$root.$emit("onSubmitForm", resp);
-          console.log(resp);
           this.errors.reset();
+          this.$root.$emit('onSubmitForm', resp);
+          
+          //app.$router.push({path: '/'});
         })
         .catch(error => {
           this.errors.record(error.response.data);

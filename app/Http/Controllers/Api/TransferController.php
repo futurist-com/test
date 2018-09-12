@@ -15,11 +15,20 @@ use Illuminate\Validation\Rule;
 
 class TransferController extends Controller {
 
+    public function __construct(){
+        
+    }
     public function getTransfer() {
+        
+        if (!Auth::check()) {
+            return response()->json(null, 401);
+            
+        }
         return $transfer = Transfer::getTransfer();
     }
 
     public function posttransfer(Request $request) {
+        
         
         //dd($request->all());
         $messages = [

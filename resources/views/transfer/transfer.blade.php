@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">Личный кабинет</div>
 
@@ -16,8 +16,15 @@
 
                     Перевод средств!
                     <bill-component></bill-component>
-                    <formtransfer-component></formtransfer-component>
-                    <gettransfer-component></gettransfer-component>
+                    <div class="row">
+                        <div class="col-md-5">
+                        <formtransfer-component></formtransfer-component>
+                        </div>
+                        <div class="col-md-7">
+                        <gettransfer-component></gettransfer-component>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
