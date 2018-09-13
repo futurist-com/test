@@ -18,15 +18,23 @@ class TransferController extends Controller {
     public function __construct(){
         
     }
+    /** 
+     * get  transfer list not supported
+     * @return json transfer list
+    */
     public function getTransfer() {
         
         if (!Auth::check()) {
             return response()->json(null, 401);
-            
-        }
+         }
         return $transfer = Transfer::getTransfer();
     }
 
+    /**
+     * record  transfer, validation input
+     * 
+     * @return json status oeration
+     */
     public function posttransfer(Request $request) {
         
         
@@ -66,10 +74,14 @@ class TransferController extends Controller {
         $transfer->summ=$request->summ;
         $transfer->status=0;
         $transfer->save();
-        return $transfer;
+        return 201;
         
     }
-
+    /**
+     * supported transfer 
+     * 
+     *  @return json transfer list before suppotted transfer
+     */
     public function confirmtransfer($id) {
         $transfer = Transfer::findOrFail($id);
         $billSender=Bill::findOrfail($transfer->id_bill_sender);
@@ -89,7 +101,11 @@ class TransferController extends Controller {
 
         return Transfer::getTransfer();
     }
-
+    /**
+     * delete transfer 
+     * 
+     *  @return json transfer list before suppotted transfer
+     */
     public function deltransfer($id) {
         $transfer = Transfer::findOrFail($id);
         $transfer->delete();

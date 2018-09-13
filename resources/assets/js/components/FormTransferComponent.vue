@@ -76,7 +76,7 @@ export default {
       axios
         .post("/api/transfer", newTransfer)
         .then((resp)=> {
-          //console.log(resp);
+         
           this.errors.reset();
           this.$root.$emit('onSubmitForm', resp);
           

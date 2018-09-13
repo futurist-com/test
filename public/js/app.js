@@ -47663,7 +47663,7 @@ var Errors = function () {
       var app = this;
       var newTransfer = app.transfer;
       axios.post("/api/transfer", newTransfer).then(function (resp) {
-        //console.log(resp);
+
         _this.errors.reset();
         _this.$root.$emit('onSubmitForm', resp);
 
