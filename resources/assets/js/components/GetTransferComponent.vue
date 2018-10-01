@@ -50,21 +50,11 @@ export default {
   },
   mounted() {
     var app = this;
-    this.$root.$on("onSubmitForm", function(resp) {
-      axios
-        .get("/api/transfer")
-        .then(resp => {
-          app.transfers = resp.data;
-        })
-        .catch(function(resp) {});
+    this.$root.$on("onSubmitForm", (resp)=> {
+      this.getTransfer();
     });
     //var app = this;
-    axios
-      .get("/api/transfer")
-      .then(function(resp) {
-        app.transfers = resp.data;
-      })
-      .catch(function(resp) {});
+    this.getTransfer();
   },
   methods: {
     deleteEntry(id, index) {
@@ -72,8 +62,9 @@ export default {
         var app = this;
         axios
           .delete("/api/transfer/" + id)
-          .then(function(resp) {
-            app.transfers = resp.data;
+          .then((resp)=> {
+            //app.transfers = resp.data;
+            this.getTransfer();
           })
           .catch(function(resp) {
             alert("Не удалось удалить перевод");
@@ -86,25 +77,25 @@ export default {
         axios
           .put("/api/transfer/" + id)
           .then((resp)=> {
-            this.transfers = resp.data;
+            //this.transfers = resp.data;
+             this.getTransfer();
              this.$root.$emit("onUpdateBalance", resp);
           })
           .catch(function(resp) {
-            
+          if(resp.response.status == 401)
             alert(
-              "Не удалось подтвердить перевод. Скорее всего у вас не достаточно средств"
+              "Не удалось подтвердить перевод. У вас не достаточно средств"
             );
           });
       }
-      /*var app = this;
-    axios
-      .get("/api/gettransfer")
-      .then(function(resp) {
-        app.transfers = resp.data;
-        console.log(app);
+      },
+      getTransfer(){
+      axios.get("/api/transfer")
+      .then((resp)=> {
+        this.transfers = resp.data;
       })
-      .catch(function(resp) {});*/
-    }
+      .catch(function(resp) {});
+      }
   }
 };
 </script>

@@ -33,7 +33,7 @@ class TransferController extends Controller {
     /**
      * record  transfer, validation input
      * 
-     * @return json status oeration
+     * @return json status operation
      */
     public function posttransfer(Request $request) {
         
@@ -74,7 +74,7 @@ class TransferController extends Controller {
         $transfer->summ=$request->summ;
         $transfer->status=0;
         $transfer->save();
-        return 201;
+        return response()->json(null, 201);;
         
     }
     /**
@@ -87,7 +87,7 @@ class TransferController extends Controller {
         $billSender=Bill::findOrfail($transfer->id_bill_sender);
         if($billSender->balance<$transfer->summ)
         {
-            return response()->json(null, 400);
+            return response()->json(null, 401);
         }
         $billRecipient=Bill::findOrfail($transfer->id_bill_recipient);
         $billSender->balance=$billSender->balance - $transfer->summ;
@@ -99,7 +99,7 @@ class TransferController extends Controller {
         $transfer->save();
 
 
-        return Transfer::getTransfer();
+        return response()->json(null, 201);;
     }
     /**
      * delete transfer 
@@ -109,8 +109,7 @@ class TransferController extends Controller {
     public function deltransfer($id) {
         $transfer = Transfer::findOrFail($id);
         $transfer->delete();
-        //return true;
-        return Transfer::getTransfer();
+        return response()->json(null, 201);;
     }
 
 }

@@ -12,25 +12,22 @@ export default {
     };
   },
   mounted() {
-    var app = this;
-    this.$root.$on("onUpdateBalance", function(resp) {
-      axios
-        .get("/api/bill")
-        .then(resp => {
-          app.bill = resp.data;
-        })
-        .catch(function(resp) {});
+    this.$root.$on("onUpdateBalance", (resp)=> {
+      this.updateBill();
     });
-    axios
+    this.updateBill();
+  }, 
+   methods:{
+     updateBill(){
+       axios
       .get("/api/bill")
-      .then(function(resp) {
-        app.bill = resp.data;
-        console.log(app);
+      .then((resp)=> {
+        this.bill= resp.data;
       })
       .catch(function(resp) {
-        console.log(resp);
         alert("Не удалось загрузить данные о счете");
       });
-  }
+     }
+   }
 };
 </script>

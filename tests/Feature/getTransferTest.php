@@ -15,6 +15,15 @@ class getTransferTest extends TestCase
      */
     public function testExample()
     {
-        $this->assertTrue(true);
+        $response = $this->get('/transfer');
+
+        $response->assertStatus(200);
+       // $this->assertTrue(true);
+       $this->visit('/transfer')
+         ->see('LAgin')
+         ->dontSee('Rsails');
+        $this->visit('/')
+       ->click('Login')
+       ->seePageIs('/login');
     }
 }
