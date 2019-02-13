@@ -3,10 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/laragon/www/test.mts/resources/assets/js/components/FormTransferComponent.vue</file>
-            <file>file:/C:/laragon/www/test.mts/resources/assets/js/components/GetTransferComponent.vue</file>
+            <file>file:/C:/laragon/www/test.mts/app/Http/Middleware/RedirectIfAuthenticated.php</file>
+            <file>file:/C:/laragon/www/test.mts/database/migrations/2014_10_12_000000_create_users_table.php</file>
+            <file>file:/C:/laragon/www/test.mts/vendor/laravel/framework/src/Illuminate/Foundation/Auth/Access/AuthorizesRequests.php</file>
+            <file>file:/C:/laragon/www/test.mts/app/Http/Middleware/EncryptCookies.php</file>
+            <file>file:/C:/laragon/www/test.mts/app/Http/Controllers/Auth/LoginController.php</file>
             <file>file:/C:/laragon/www/test.mts/app/Http/Controllers/Controller.php</file>
-            <file>file:/C:/laragon/www/test.mts/app/Http/Controllers/Api/TransferController.php</file>
+            <file>file:/C:/laragon/www/test.mts/app/Http/Middleware/CheckForMaintenanceMode.php</file>
+            <file>file:/C:/laragon/www/test.mts/app/Http/Controllers/Auth/RegisterController.php</file>
+            <file>file:/C:/laragon/www/test.mts/routes/web.php</file>
         </group>
     </open-files>
 </project-private>
